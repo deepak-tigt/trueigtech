@@ -1,0 +1,11 @@
+here is how we can create our own package.jon file 
+
+usi npm init and it ask for some details fill them and verify then the file is created 
+
+we never push the node moudules on the github (because it is very large )
+we only push package.json and 
+reinstall them using the    "npm i"
+
+
+*** what is nodemon package 
+-> it keeps our file in the running state and if any changes happen then it reflected in output no need to restart 
