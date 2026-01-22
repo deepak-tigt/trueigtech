@@ -1,5 +1,5 @@
-// const {add,subtract} = require('./data')
-// console.log(add(1,3))
+const {add,subtract} = require('./01_data')
+console.log(add(1,3))
 
 
 // const math = require('./data')
