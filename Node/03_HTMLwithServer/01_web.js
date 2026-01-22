@@ -3,7 +3,7 @@ const fs = require("fs") // for readidng the file
 
 
 http.createServer((req,resp)=>{
-    // passing the html file in the fs to read the file 
+    // passing the html file in the fs readfile 
     fs.readFile('index.html','utf-8',(err,data)=>{
         if(err){
             resp.write('internal server error');
