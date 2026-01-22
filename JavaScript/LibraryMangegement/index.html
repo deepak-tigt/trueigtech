@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library</title>
+</head>
+<body>
+  <h1>Library Management System</h1>
+
+  <!-- 1. Add Book -->
+  <h2>Add Book</h2>
+  <form >
+    <input type="text" id="addIsbn" placeholder="ISBN"><br><br>
+    <input type="text" id="addTitle" placeholder="Book Title"><br><br>
+    <input type="text" id="addAuthor" placeholder="Author"><br><br>
+    <button type="button" id="adding">Add Book</button>
+  </form>
+  <p id="addOutput"></p>
+
+  <hr>
+
+  <!-- 2. Get Book Details -->
+  <h2>Get Book Details</h2>
+  <form >
+    <input type="text" id="searchIsbn" placeholder="Enter ISBN"><br><br>
+    <button type="button" id="getBook">Get Details</button>
+    <div id="bookDetails"></div>
+  </form>
+
+
+  <hr>
+
+  <!-- 3. Borrow Book -->
+  <h2>Borrow Book</h2>
+  <form >
+    <input type="text" id="borrowIsbn" placeholder="Enter ISBN"><br><br>
+    <button type="button" id="borrowing">Borrow Book</button>
+  </form>
+  <p id="borrowOutput"></p>
+
+  <hr>
+
+  <!-- 4. Return Book -->
+  <h2>Return Book</h2>
+  <form >
+    <input type="text" id="returnIsbn" placeholder="Enter ISBN"><br><br>
+    <button type="button"  id="returning">Return Book</button>
+  </form>
+  <p id="returnOutput"></p>
+
+</body>
+<script type="module" src="script.js"></script>
+</html>
