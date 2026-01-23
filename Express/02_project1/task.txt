@@ -1,0 +1,18 @@
+
+rest api json 
+
+these are routes 
+
+/.. -> give html data
+get/users --> 
+
+/api/.. -> give json data
+
+get/api/users --> list all users 
+get/api/users/1 --> get the user with id 1 
+
+post/api/users --> create new user 
+
+patch/api/user/1 --> update the user with id 1 
+
+delete/api/users/1 --> delete the user with id 1
