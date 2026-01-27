@@ -10,6 +10,12 @@ app.use(express.urlencoded({extended:false}))
 // middleware it convert the text data in the js object 
 app.use(express.json())
 
+// creating our own middleware using the app.use 
+app.use((req,res,next)=>{
+    console.log("hello from middleware 1  ");
+    return res.json({ })
+}) 
+
 // route 
 // if /users is hit the return data in html 
 app.get('/users',(req,res)=>{
