@@ -1,0 +1,23 @@
+{
+  "name": "expressproject",
+  "version": "1.0.0",
+  "description": "this is express poject for practice",
+  "license": "ISC",
+  "author": "deepak",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "async": "^3.2.6",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "express-async-handler": "^1.2.0",
+    "handler": "^0.1.3",
+    "nodemon": "^3.1.11",
+    "pg": "^8.17.2"
+  }
+}
