@@ -1,7 +1,8 @@
 const express = require("express");
 require("dotenv").config();
 const pool = require("./config/db")
-const contactRoutes = require("./routes/constactRoutes");
+const contactRoutes = require("./routes/contactRoutes");
+const userRoutes = require("./routes/userRoutes")
 const errorHandler = require("./middleware/errorHandler");
 const app = express();
 
@@ -13,6 +14,8 @@ console.log(port);
 app.use(express.json());
 
 app.use('/api/contacts',contactRoutes)
+
+app.use('/api/users',userRoutes)
 // custom middleware to handle the error 
 app.use(errorHandler)
 
@@ -23,6 +26,6 @@ pool.connect(()=>{
     
 })
 app.listen(port,()=>{
-    console.log("server running on port : "+port);
+    console.log(`http://localhost:${port}`);
     
 })

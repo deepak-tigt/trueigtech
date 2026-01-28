@@ -31,6 +31,10 @@ const getContactById = asyncHandler(async(req,res)=>{
         throw new Error("id is required !")
     }
     const contactById = await contact.getContactById(id);
+    if(!contactById){
+        res.status(404)
+        throw new Error("invalid id!")
+    }
     res.status(200).json(contactById)
 });
 
@@ -41,6 +45,11 @@ const updateContact = asyncHandler(async(req,res)=>{
     const {name,email,phone} = req.body;
     if(!id|| !name || !email || ! phone){
         throw new Error("all fields are required !")
+    }
+    const contactById = await contact.getContactById(id);
+    if(!contactById){
+        res.status(404)
+        throw new Error("invalid id!")
     }
     const update = await contact.updateContactById(id,{name,email,phone})
     res.status(200).json(update)
@@ -53,11 +62,17 @@ const deleteContact = asyncHandler(async(req,res)=>{
     if(!id){
         throw new Error("id is required")
     }
+    const contactById = await contact.getContactById(id);
+    if(!contactById){
+        res.status(404)
+        throw new Error("invalid id!")
+    }
+    await contact.deleteContact(id)
     res.status(200).json({message:"contact deleted successfully ..."})
 });
 
 module.exports = {
-    getContacts,
+    getContacts, 
     createContact,
     getContactById,
     updateContact,
