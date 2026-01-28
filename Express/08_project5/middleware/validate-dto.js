@@ -4,7 +4,7 @@ function validateDto(ajvSchema) {
         if(!valid){
             // store the error returned by the ajvValidate
             const errors = ajvSchema.errors;
-            res.status(200).json(errors)
+            res.status(400).json(errors)
         }
         next();
 
