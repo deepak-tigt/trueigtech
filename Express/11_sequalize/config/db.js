@@ -8,3 +8,12 @@ const sequelize = new Sequelize("sequelizedb","postgres","root",{host:"localhost
 
 
 export default sequelize;
+
+
+try {
+  await sequelize.authenticate();
+  console.log("Database connected successfully");
+} catch (error) {
+  console.error("Database connection failed:", error.message);
+  
+}

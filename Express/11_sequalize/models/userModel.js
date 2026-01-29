@@ -36,7 +36,6 @@ const User = sequelize.define(
     },
     {
         // other model options 
-        sequelize, // we need to pass the connection instance 
         modelName:'User', // we need to choose the model name 
     }
 );
