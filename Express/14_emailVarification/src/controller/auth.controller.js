@@ -2,6 +2,7 @@ import RegisterService from "../service/auth/register.service.js"
 import LoginService from "../service/auth/login.service.js"
 import verifyEmailService from "../service/auth/verifyEmail.service.js";
 import forgetPasswordService from "../service/auth/forgetPassword.service.js";
+import AllUserService from "../service/auth/allUser.service.js";
 
 class AuthController {
     async register(req,res,next){
@@ -55,6 +56,17 @@ class AuthController {
         }
         catch(err){
             next(err);
+        }
+    }
+
+    async getAllUsers(req,res,next){
+        try{
+            const{page,Size} = req.query;
+        const data = await AllUserService.getAllUser(page,Size);
+        res.status(200).json({data})
+        }
+        catch(err){
+            next(err)
         }
     }
 }

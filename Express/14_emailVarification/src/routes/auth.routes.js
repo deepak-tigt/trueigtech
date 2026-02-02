@@ -12,4 +12,6 @@ router.get("/user/verifyEmail/:token",AuthController.verifyEmail)
 router.post("/user/forgetPassword",validateAjv(userSchema),AuthController.forgetPassword)
 router.post("/user/resetPassword",validateAjv(userSchema),AuthController.resetPassword)
 
+router.get("/user/",AuthController.getAllUsers)
+
 export default router;
