@@ -19,6 +19,16 @@ class MailService{
             html:`<a href="${link}">verify Email</a>`
         })
     }
+
+    sendForgetPasswordEmail(email,token){
+        console.log(email ,"debug");
+        
+        return this.trasporter.sendMail({
+            to:email,
+            subject:"forget password token",
+            html:`<p>${token}</p>`
+        })
+    }
 }
 
 export default new MailService();
