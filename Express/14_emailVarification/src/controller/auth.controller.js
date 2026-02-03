@@ -61,8 +61,8 @@ class AuthController {
 
     async getAllUsers(req,res,next){
         try{
-            const{page,Size} = req.query;
-        const data = await AllUserService.getAllUser(page,Size);
+            const{page,Size,column,order,search} = req.query;
+        const data = await AllUserService.getAllUser(page,Size,column,order,search);
         res.status(200).json({data})
         }
         catch(err){
