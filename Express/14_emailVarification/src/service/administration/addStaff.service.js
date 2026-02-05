@@ -1,3 +1,59 @@
 import db from "../../models/index.js"
-const {Administration} = db;
+import PasswordUtil from "../../utils/password.util.js";
+import PermissionUtil from "../../utils/permission.util.js"
+const {Administration,Role} = db;
 
+class AddStaffService{
+
+     async addStaff(creatorId,data){
+        const creator = await Administration.findByPk(creatorId,{
+            include:{model:Role,as:"role"}
+        });
+
+        if(!creator){
+            throw new Error("Creator not found")
+        }
+
+        // target role 
+        const role = await Role.findByPk(data.roleId)
+        if(!role){
+            throw new Error("Role not found !")
+        }
+
+        // compare hierarchy 
+        if(creator.role.level >= role.level){
+            throw new Error("you are not eligible to perform this action !")
+        }
+
+        // now check the permission 
+        if(!PermissionUtil.isSubset(data.permissions,creator.role.permissions)){
+            throw new Error("can't exceed creator's permissions")
+        }
+
+        // check if existing staff
+        const existingStaff = await Administration.findOne({where:{email:data.email}})
+        if(existingStaff){
+            throw new Error("email already registered")
+        }
+        
+        // password hash 
+        const hashedPassword = await PasswordUtil.hash(data.password)
+
+        // adding the staff
+        const newStaff = await Administration.create({
+            firstName:data.firstName,
+            lastName:data.lastName,
+            email:data.email,
+            password:hashedPassword,
+            permissions:data.permissions,
+            roleId:data.roleId,
+            createdBy:creatorId
+        })
+
+        // take the password out of the sequelize object and put all the remaing in the staffData from the new staff
+        const {password,...staffData} = newStaff.toJSON()
+        return staffData;
+    }
+}   
+
+export default new AddStaffService();

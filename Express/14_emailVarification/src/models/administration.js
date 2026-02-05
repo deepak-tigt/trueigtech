@@ -31,45 +31,62 @@ export default (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER
       },
-      first_name: {
+      firstName: {
         type: DataTypes.STRING,
-        allowNull:false,
+        allowNull: false,
+        validate: {
+          isAlpha: true,
+        },
       },
-      last_name: {
+      lastName: {
         type: DataTypes.STRING,
-        allowNull:false,
+        allowNull: false,
+        validate: {
+          isAlpha: true,
+        },
       },
       email: {
         type: DataTypes.STRING,
         allowNull:false,
+        unique:true,
+        validate: {
+          isEmail: true
+        },
+        set(value) {
+            this.setDataValue("email", value.toLowerCase());
+        }
       },
-      passsword: {
+      password: {
         type: DataTypes.STRING,
-        allowNull:false
+        allowNull: false,
+        validate: {
+          len: [6, 255],
+        },
       },
       permissions: {
         type: DataTypes.JSONB,
         allowNull:false
       },
-      role_id: {
+      roleId: {
         type: DataTypes.INTEGER,
         allowNull:false
       },
-      created_by: {
+      createdBy: {
         type: DataTypes.INTEGER,
         allowNull:false,
       },
-      created_at: {
+      createdAt: {
         allowNull: false,
         type: DataTypes.DATE
       },
-      updated_at: {
+      updatedAt: {
         allowNull: false,
         type: DataTypes.DATE
       }
   }, {
     sequelize,
     modelName: 'Administration',
+    tableName:'Administrations',
     underscored:true,
   });
   return Administration;

@@ -45,6 +45,7 @@ export default (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Role',
+    tableName:'Roles',
   });
   return Role;
 };
