@@ -14,6 +14,6 @@ const schema = {
             type:"integer",
         }
     }
-}
+} 
 
 export default ajvInstance.compile(schema);
