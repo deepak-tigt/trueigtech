@@ -2,10 +2,14 @@ import db from "../../models/index.js"
 import PasswordUtil from "../../utils/password.util.js";
 import PermissionUtil from "../../utils/permission.util.js"
 const {Administration,Role} = db;
+import BaseHandler from "../../utils/baseHandler.js"
 
-class AddStaffService{
+export default class AddStaffService extends BaseHandler {
 
-     async addStaff(creatorId,data){
+     async run(){
+        let {creatorId,data} = this.args        
+        console.log("===================>",creatorId,data);
+        
         const creator = await Administration.findByPk(creatorId,{
             include:{model:Role,as:"role"}
         });
@@ -56,4 +60,3 @@ class AddStaffService{
     }
 }   
 
-export default new AddStaffService();

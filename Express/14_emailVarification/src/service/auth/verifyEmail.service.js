@@ -1,11 +1,12 @@
 import db from "../../models/index.js"
 const {User} = db;
 import TokenUtil from "../../utils/token.utils.js";
+import BaseHandler from "../../utils/baseHandler.js";
 
+export default class VerifyEmailService extends BaseHandler{
 
-class VerifyEmailService{
-
-    async verifyEmail(token){
+    async run(){
+        const token = this.args;
         const decode =  TokenUtil.verifyEmailToken(token);
         if(!decode){
             throw new Error("invalid token")
@@ -15,5 +16,3 @@ class VerifyEmailService{
         await user.save();
     }   
 }
-
-export default new VerifyEmailService();

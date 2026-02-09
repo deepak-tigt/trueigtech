@@ -1,10 +1,12 @@
 import db from "../../models/index.js"
+import BaseHandler from "../../utils/baseHandler.js";
 const {Games, GameCategory} = db;
 
 
-class CreateGameService{
+export default class CreateGameService extends BaseHandler{
     
-    async createGame(data){
+    async run(){
+        const data = this.args;
         // chek for the category
         const category = await GameCategory.findByPk(data.categoryId)
         if(!category || !category.status){
@@ -23,5 +25,3 @@ class CreateGameService{
         return game;
     }
 }
-
-export default new CreateGameService();

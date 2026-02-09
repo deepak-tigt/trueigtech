@@ -1,9 +1,11 @@
 import db from "../../models/index.js"
+import BaseHandler from "../../utils/baseHandler.js";
 const {GameCategory} = db;
 
 
-class CreateCategoryService{
-    async createCategory(data){
+export default class CreateCategoryService extends BaseHandler{
+    async run(){
+        const data = this.args;
         const existing = await GameCategory.findOne({
             where:{name:data.name}
         })
@@ -20,5 +22,3 @@ class CreateCategoryService{
         return category;
     }
 }
-
-export default new CreateCategoryService();

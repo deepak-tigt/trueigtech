@@ -1,12 +1,12 @@
 import CreateGameService from "../service/game/createGame.service.js"
 import GetAllGameService from "../service/game/getAllGame.service.js"
 import GetAllGamebyCategoryService from "../service/game/getAllGamebyCategory.service.js"
-
 class GameController{
 
     async createGame(req,res,next){
         try{
-            const game = await CreateGameService.createGame(req.body);
+            const service = CreateGameService.execute(req.body);
+            const game = await service.run()
             res.status(201).json({message:"game is created successfully !",game})
         }
         catch(error){
@@ -14,9 +14,12 @@ class GameController{
         }
     }
 
+
+    // using base
     async getAllGames(req,res,next){
         try{
-            const games = await GetAllGameService.getAllGame();
+            const service = GetAllGameService.execute(req.query);
+            const games = await service.run()
             res.status(200).json({count:games.length,games})
         }
         catch(error){
@@ -26,7 +29,8 @@ class GameController{
 
     async getAllGameByCategory(req,res,next){
         try{
-            const games = await GetAllGamebyCategoryService.getAllGameByCategory(req.params.id)
+            const service = GetAllGamebyCategoryService.execute({categoryId:req.params.id,data:req.query})
+            const games = await service.run()
             res.status(200).json({count:games.length,games})
         }
         catch(error){

@@ -1,9 +1,12 @@
 import { Op, where } from "sequelize";
 import db from "../../models/index.js";
 const { User } = db;
+import BaseHandler from "../../utils/baseHandler.js";
 
-class AllUserService {
-  async getAllUser(page, size,column,order,search) {
+
+export default class AllUserService extends BaseHandler {
+  async run() {
+    let {page, size,column,order,search} = this.args
     page = parseInt(page);
     size = parseInt(size);
 
@@ -36,4 +39,3 @@ class AllUserService {
   }
 }
 
-export default new AllUserService();

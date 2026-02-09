@@ -4,9 +4,9 @@ dotenv.config();
 
 const verifyToken = (req, res, next) => {
  
-  const token = req.headers.authorization.split(" ")[1];
-
-  if (!token) {
+  try{
+    const token = req.headers.authorization.split(" ")[1];    
+    if (!token) {
     return res.status(401).json({ error: "token Unauthorized" });
   }
 
@@ -18,6 +18,14 @@ const verifyToken = (req, res, next) => {
     console.log(error);
     res.status(401).json({ error: "token unauthorized" });
   }
+  }
+  catch(error){
+    console.log("===========> token error :",error);
+    res.status(404).json({error:"token not found ! "})
+    
+  }
+
+  
 };
 
 export default verifyToken;

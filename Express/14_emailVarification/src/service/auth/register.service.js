@@ -3,10 +3,12 @@ const {User} = db;
 import PasswordUtil from "../../utils/password.util.js"
 import TokenUtil from "../../utils/token.utils.js"
 import sendEmailService from "../mail/sendEmail.service.js"
+import BaseHandler from "../../utils/baseHandler.js"
 
- class RegisterService{
+export default class RegisterService extends BaseHandler {
 
-    async register({firstName,lastName,email,password}){
+    async run(){
+        const {firstName,lastName,email,password} = this.args
         const alreadyExists = await User.findOne({where:{email}})
         if(alreadyExists){
             throw new Error("Email already registerd !")
@@ -34,4 +36,3 @@ import sendEmailService from "../mail/sendEmail.service.js"
     }   }
 }
 
-export default new RegisterService();

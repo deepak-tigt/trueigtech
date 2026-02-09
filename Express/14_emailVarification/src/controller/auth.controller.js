@@ -1,14 +1,17 @@
 import RegisterService from "../service/auth/register.service.js"
 import LoginService from "../service/auth/login.service.js"
 import verifyEmailService from "../service/auth/verifyEmail.service.js";
-import forgetPasswordService from "../service/auth/forgetPassword.service.js";
+import ForgetPasswordService from "../service/auth/forgetPassword.service.js";
 import AllUserService from "../service/auth/allUser.service.js";
+import  ResetPasswordService  from "../service/auth/resetPassword.service.js";
 
 class AuthController {
     async register(req,res,next){
         try{
-            const {user} =  await RegisterService.register(req.body);
-            res.status(201).json({user:user,message:"verify your email"})
+            const service = RegisterService.execute(req.body);
+            const user = await service.run();
+            console.log(`debug======= ${user}==========`);
+            res.status(201).json({user,message:"verify your email"})
         }
         catch(err){
             next(err);
@@ -17,7 +20,8 @@ class AuthController {
 
     async login(req,res,next){
         try{
-            const {token,user} = await LoginService.login(req.body);
+            const service =  LoginService.execute(req.body);
+            const {token,user} = await service.run();
             res.status(200).json({token,user})
         }
         catch(err){
@@ -27,7 +31,8 @@ class AuthController {
 
     async verifyEmail(req,res,next){
         try{
-            await verifyEmailService.verifyEmail(req.params.token)
+            const service =  verifyEmailService.execute(req.params.token)
+            await service.run();
             res.status(200).json({message:"Email verfied"})
         }
         catch(err){
@@ -36,11 +41,9 @@ class AuthController {
     }
 
     async forgetPassword(req,res,next){
-        const {email} = req.body;
-        console.log(email , "debug 1");
-        
         try{
-            await forgetPasswordService.forgetPassword({email});
+            const service =  ForgetPasswordService.execute(req.body);
+            await service.run()
             res.status(200).json({message:"To forget password check your email"})
         }
         catch(err){
@@ -50,8 +53,8 @@ class AuthController {
 
     async resetPassword(req,res,next){
         try{
-            const {token,newPassword,confirmNewPassword} = req.body;
-            await forgetPasswordService.resetPassword({token,newPassword,confirmNewPassword});
+            const service =  ResetPasswordService.execute(req.body);
+            await service.run();
             res.status(200).json({message:"your password has been updated ! "})
         }
         catch(err){
@@ -61,8 +64,8 @@ class AuthController {
 
     async getAllUsers(req,res,next){
         try{
-            const{page,Size,column,order,search} = req.query;
-        const data = await AllUserService.getAllUser(page,Size,column,order,search);
+        const service = AllUserService.execute(req.query);
+        const data = await service.run()
         res.status(200).json({data})
         }
         catch(err){
