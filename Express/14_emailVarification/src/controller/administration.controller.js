@@ -8,7 +8,7 @@ class AdministrationController{
         try{
             console.log("------------>",req.user);
             
-            const service =  AddStaffService.execute({creatorId:req.user.id,data:req.body});
+            const service =  AddStaffService.execute({creatorId:req.user.id,data:req.body},req.context);
             const result = await service.run();
             res.status(201).json({staff:result,message:"staff created sucessfully !"})
         }

@@ -4,15 +4,17 @@ import AuthMiddleware from "../middleware/auth.js";
 import CheckPermission from "../middleware/permissionCheck.js";
 import validateAjv from "../middleware/validateAjv.js";
 import gameSchema from "../schema/gameSchema.js";
+import contextMiddleware from "../middleware/contextMiddleware.js";
 const router = Router();
 
 
 // create game
 router.post(
   "/game/addGame",
-  AuthMiddleware,
   validateAjv(gameSchema),
+  AuthMiddleware,
   CheckPermission("game_management", "create"),
+  contextMiddleware(true),
   GameController.createGame,
 );
 

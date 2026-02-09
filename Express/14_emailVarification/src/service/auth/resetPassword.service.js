@@ -8,7 +8,7 @@ const {User} = db;
 export default class ResetPasswordService extends BaseHandler{
 
     async run(){
-        const {token,newPassword,confirmNewPassword} = this.args;
+        const {token,newPassword,confirmNewPassword,transaction} = this.args;
         console.log(`debug ========> ${token}`);
         
         const decode = TokenUtil.verifyForgetPasswordToken(token)
@@ -18,9 +18,9 @@ export default class ResetPasswordService extends BaseHandler{
         if(newPassword!==confirmNewPassword){
             throw new Error("New Password and Confirm New Password must be same !")
         }
-        const user = await User.findOne({where:{email:decode.email}})
+        const user = await User.findOne({where:{email:decode.email},transaction})
         user.password = await PasswordUtil.hash(newPassword);
-        await user.save();
+        await user.save({transaction});
 
     }
 }

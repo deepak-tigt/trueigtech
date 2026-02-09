@@ -8,7 +8,7 @@ import  ResetPasswordService  from "../service/auth/resetPassword.service.js";
 class AuthController {
     async register(req,res,next){
         try{
-            const service = RegisterService.execute(req.body);
+            const service = RegisterService.execute({...req.body},req.context);
             const user = await service.run();
             console.log(`debug======= ${user}==========`);
             res.status(201).json({user,message:"verify your email"})
@@ -31,7 +31,7 @@ class AuthController {
 
     async verifyEmail(req,res,next){
         try{
-            const service =  verifyEmailService.execute(req.params.token)
+            const service =  verifyEmailService.execute({token:req.params.token},req.context)
             await service.run();
             res.status(200).json({message:"Email verfied"})
         }
@@ -42,7 +42,7 @@ class AuthController {
 
     async forgetPassword(req,res,next){
         try{
-            const service =  ForgetPasswordService.execute(req.body);
+            const service =  ForgetPasswordService.execute(req.body,req.context);
             await service.run()
             res.status(200).json({message:"To forget password check your email"})
         }
@@ -53,7 +53,7 @@ class AuthController {
 
     async resetPassword(req,res,next){
         try{
-            const service =  ResetPasswordService.execute(req.body);
+            const service =  ResetPasswordService.execute(req.body,req.context);
             await service.run();
             res.status(200).json({message:"your password has been updated ! "})
         }

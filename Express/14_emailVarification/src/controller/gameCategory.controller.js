@@ -4,7 +4,7 @@ import GetAllCategoryService from "../service/game/getAllCategory.service.js";
 class GameCategoryController {
     async createCategory(req,res,next){
         try{
-            const service =  CreateCategoryService.execute(req.body);
+            const service =  CreateCategoryService.execute({data:req.body},req.context);
             const category = await service.run()
             res.status(201).json({message:"game category created successfully",category})
         }

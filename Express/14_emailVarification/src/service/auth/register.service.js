@@ -9,13 +9,16 @@ export default class RegisterService extends BaseHandler {
 
     async run(){
         const {firstName,lastName,email,password} = this.args
-        const alreadyExists = await User.findOne({where:{email}})
+        const {transaction} = this.context
+        console.log("===============> this.context ===========>",this.context);
+        
+        const alreadyExists = await User.findOne({where:{email},transaction})
         if(alreadyExists){
             throw new Error("Email already registerd !")
         }
         const hashPassword = await PasswordUtil.hash(password);
         // user created and stored in the user 
-        const user = await User.create({firstName,lastName,email,password:hashPassword})
+        const user = await User.create({firstName,lastName,email,password:hashPassword},{transaction})
 
         const payload ={id:user.id,firstName,lastName,email}
         // token is generated to send on mail 

@@ -5,7 +5,7 @@ class GameController{
 
     async createGame(req,res,next){
         try{
-            const service = CreateGameService.execute(req.body);
+            const service = CreateGameService.execute(req.body,req.context);
             const game = await service.run()
             res.status(201).json({message:"game is created successfully !",game})
         }

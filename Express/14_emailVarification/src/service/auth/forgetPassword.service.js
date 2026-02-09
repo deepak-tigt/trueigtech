@@ -8,9 +8,11 @@ const {User} = db;
 export default class ForgetPasswordService extends BaseHandler{
     async run(){
         const {email} = this.args
+        const {transaction} = this.context
         console.log(email , "debug 2")
         const user = await User.findOne({
-            where : {email}
+            where : {email},
+            transaction
         })
         
         if(!user){
