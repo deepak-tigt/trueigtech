@@ -9,7 +9,7 @@ export default function contextMiddleware(transactionStatus = false) {
       return next();
     }
 
-    // start a transaction for the above mentioned requests only
+    // start a transaction 
     console.log("......starting transaction .......");
     let transaction;
     try {
@@ -22,6 +22,7 @@ export default function contextMiddleware(transactionStatus = false) {
     req.context = { transaction };
 
     let isTransacitonCompleted = false;
+    
     const confirmTransation = async (statusCode) => {
       // executed when it is true
       if (isTransacitonCompleted) {

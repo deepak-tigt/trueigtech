@@ -14,8 +14,8 @@ export default class GetAllGamesService extends BaseHandler {
       pageNum = page;
     }
 
-    let sizeNum = 5;
-    if (size > 0 && size <= 15) {
+    let sizeNum = 10;
+    if (size > 0 && size <= 100) {
       sizeNum = size;
     }
 

@@ -15,8 +15,8 @@ export default class AllUserService extends BaseHandler {
       pageNum = page;
     }
 
-    let pageSize = 5;
-    if (size > 0 && size <= 15) {
+    let pageSize = 10;
+    if (size > 0 && size <= 100) {
       pageSize = size;
     }
     const users = await User.findAndCountAll({
