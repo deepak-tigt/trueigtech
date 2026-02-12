@@ -1,0 +1,70 @@
+
+services:
+#  for the data base 
+  db:
+    image: postgres:16-alpine
+    container_name: local-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: verifyEmail
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+
+# #  for the redis cache
+#   redis:
+#     image: redis:7-alpine
+#     container_name: local-redis
+#     ports:
+#       - "6379:6379"
+
+
+#  for the redis + redis visualizeation (redis stack)
+  redis:
+    image: redis/redis-stack:latest
+    container_name: redis-stack
+    ports:
+      - "6379:6379"   # Redis server
+      - "8001:8001"   # redis UI  
+
+# for the pgadmin visualization (pgadmin4)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8002:80"
+    depends_on:
+      - db  
+
+
+# for the node app
+  app:
+    build: .
+    container_name: node-app
+    depends_on:
+      - db
+    ports:
+      - "8080:3000"
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: verifyEmail
+      DB_USER: postgres
+      DB_PASSWORD: root
+      NODE_ENV: development
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_TTL_SECONDS:
+    volumes:
+      - .:/app
+      # - /app/node_modules
+    command: ["npm", "start"]
+
+volumes:
+  pgdata:

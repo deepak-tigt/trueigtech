@@ -6,10 +6,11 @@ import errorHandler from "./src/middleware/errorHandler.js"
 import administrationRoutes from "./src/routes/administration.routes.js"
 import gameCategoryRoutes from "./src/routes/gameCategory.routes.js"
 import gameRoutes from "./src/routes/game.routes.js"
-import transactionMiddleware from "./src/middleware/contextMiddleware.js"
+import client from "./src/libs/redis.js" 
+
 const app = express()
 
-const PORT=process.env.PORT || 8000;
+const PORT=process.env.PORT || 3000;
 
 app.use(express.json())
 // app.use(transactionMiddleware)
@@ -20,6 +21,6 @@ app.use("/api/v1",gameCategoryRoutes)
 app.use("/api/v1",gameRoutes)
 app.use(errorHandler)
 
-app.listen(PORT,()=>{
+app.listen(PORT,"0.0.0.0",()=>{
     console.log(`server is running on port ${PORT}`);
 })
